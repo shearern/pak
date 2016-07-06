@@ -33,6 +33,8 @@ Here's what it does do:
    (e.g.: Configuration files). 
  - Set permissions on installed files
  - Map owner and group to target host UIDs and GIDs.
+ - Support installing package multiple times (in seperate locations) on the same host.
+   Intended to support multiple instances (production + development) of the same application.
  - Create self-installing executable packages (for Linux at least).
  
  
