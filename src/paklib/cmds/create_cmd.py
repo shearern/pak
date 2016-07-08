@@ -7,5 +7,5 @@ def help():
         """)
 
 
-def go():
-    print "HIT"
+def run(argv):
+    print "HIT", ' '.join(argv)
