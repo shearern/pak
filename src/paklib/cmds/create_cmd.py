@@ -1,7 +1,9 @@
 import os
 import gflags
-
 from textwrap import dedent
+
+import hashlib
+import zipfile
 
 from ..exceptions import UsageError
 
@@ -55,14 +57,34 @@ def run(args):
     if gflags.FLAGS.warn_non_file:
         scanner.warn_non_file = lambda path: _print("WARNING: Skipping file object:" + path)
 
+    # Init package file
+    pak = zipfile.ZipFile(target, mode='w')
 
     # Process file objects in source folder
     manifest = PakManifest()
     for source_obj in scanner.scan():
+
         if source_obj.obj_type == 'folder':
-            print source_obj
+
+            print '[D]', source_obj
+
             fold = PakFolder(source_obj.path)
             manifest.dirs[fold.path] = fold
 
-    print manifest.save_string()
+        elif source_obj.obj_type == 'file':
 
+            print '[F]', source_obj
+
+            hash = hashlib.md5()
+            hash.upd
+
+            pfile = PakFile(source_obj.path)
+            manifest.files[pfile.path] = pfile
+
+            pak.write(source_obj.abs_path, os.path.join('files', pfile.path), zipfile.ZIP_DEFLATED)
+
+    # Add manifest to package
+    pak.writestr('manifest.json', manifest.save_string(), zipfile.ZIP_DEFLATED)
+
+    # Clean up
+    pak.close()
