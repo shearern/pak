@@ -1,7 +1,10 @@
 import os
 import sys
 import gflags
+
 from textwrap import dedent
+
+from paklib.exceptions import UsageError
 
 USAGE = dedent("""\
             Usage: pak (command)
@@ -66,6 +69,9 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # Run command
-    command_module.run(argv)
+    try:
+        command_module.run(argv)
+    except UsageError, e:
+        usage_error(str(e))
 
     print "Finished"

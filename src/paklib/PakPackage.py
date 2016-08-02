@@ -2,4 +2,4 @@
 
 
 class PakPackage(object):
-    '''Wrapper to read packages'''
+    '''Wrapper to read package files'''
