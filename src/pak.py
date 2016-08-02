@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
     # Run command
     try:
-        command_module.run(argv)
+        command_module.run(argv[1:])
     except UsageError, e:
         usage_error(str(e))
 
