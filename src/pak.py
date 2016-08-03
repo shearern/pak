@@ -6,6 +6,15 @@ from textwrap import dedent
 
 from paklib.exceptions import UsageError
 
+'''
+Adding a command:
+ 1. Create module under paklib.cmds: (name)_cmd
+ 2. Add command name and import under "# Load command below"
+ 3. Define help()
+ 4. Define run(args)
+'''
+
+
 USAGE = dedent("""\
             Usage: pak (command)
 
@@ -48,6 +57,9 @@ if __name__ == '__main__':
     if command_name == 'create':
         from paklib.cmds import create_cmd
         command_module = create_cmd
+    if command_name == 'install':
+        from paklib.cmds import install_cmd
+        command_module = install_cmd
     else:
         usage_error("Unknown command: " + command_name)
 
@@ -72,6 +84,7 @@ if __name__ == '__main__':
     try:
         command_module.run(argv[1:])
     except UsageError, e:
-        usage_error(str(e))
+        print "ERROR:", str(e)
+        print command_module.help()
 
     print "Finished"

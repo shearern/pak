@@ -40,12 +40,13 @@ def run(args):
         source_path, target_filename = args
 
     # Validate source path
+    source_path = os.path.abspath(source_path)
     if not os.path.exists(source_path):
         raise UsageError("Source path doesn't exist: " + source_path)
     if not os.path.isdir(source_path):
         raise UsageError("Source path isn't a directory: " + source_path)
 
-    # Examin target filename
+    # Examine target filename
     target = os.path.abspath(target_filename)
     if not os.path.exists(os.path.dirname(target)):
         raise UsageError("Directory doesn't exist for target: " + target)
